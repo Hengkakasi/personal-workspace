@@ -10,7 +10,7 @@
 - 📍 好去处
 
 ## 部署
-### 1. 安装本地 PHP 环境 （XAMPP）
+### 1. 安装本地 PHP 环境 （XAMPP）- https://www.apachefriends.org/download.html
 启动 Apache 和 MySQL。
 
 ### 2. 下载项目
