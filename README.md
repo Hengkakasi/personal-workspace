@@ -1,5 +1,3 @@
-# personal-workspace
-
 # 个人工作台
 
 一个 PHP + MySQL 的个人事务管理系统。
