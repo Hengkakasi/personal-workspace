@@ -12,7 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-require_once __DIR__ . '/config.php';
+$db_host = 'localhost';
+$db_name = 'YOUR_DATABASE_NAME';
+$db_user = 'YOUR_DATABASE_USERNAME';
+$db_pass = 'YOUR_DATABASE_PASSWORD';
 
 try {
     $pdo = new PDO(
