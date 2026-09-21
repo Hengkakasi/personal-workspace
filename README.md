@@ -14,6 +14,8 @@
 启动 Apache 和 MySQL。
 
 ### 2. 下载项目
+将项目下载或 Clone 到 XAMPP 的 htdocs 目录。 （ C:\xampp\htdocs\personal-workspace ）
+
 
 ### 3. 创建 MySQL 数据库
 - 打开 phpMyAdmin：访问 http://localhost/phpmyadmin
