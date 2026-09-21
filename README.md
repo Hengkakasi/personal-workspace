@@ -10,10 +10,31 @@
 - 📍 好去处
 
 ## 部署
-1. 导入 `sql/schema.sql` 到 MySQL
-2. 复制 `config.example.php` 为 `config.php`，填入数据库信息
-3. 上传所有文件到 PHP 服务器
-4. 访问 `index.html`
+### 1. 安装本地 PHP 环境 （XAMPP）
+启动 Apache 和 MySQL。
+
+### 2. 下载项目
+
+### 3. 创建 MySQL 数据库
+a. 打开 phpMyAdmin：访问 http://localhost/phpmyadmin
+b. 创建一个新的 MySQL 数据库 personal_workspace
+c. 然后导入项目中的数据库结构：sql/schema.sql
+
+### 4. 配置数据库连接
+a. 打开 api.php
+b. 找到数据库配置, 填写你自己本地 MySQL 的数据库信息。
+
+$db_host = 'localhost';
+$db_name = 'personal_workspace';
+$db_user = 'root';
+$db_pass = '';
+
+### 5. 启动项目
+确保 Apache 和 MySQL 已启动，然后在浏览器访问：
+
+http://localhost/personal-workspace/
+
+即可使用个人工作台。
 
 ## 技术栈
 - 前端：原生 JS + Quill 富文本
