@@ -24,10 +24,10 @@
 - 打开 api.php
 - 找到数据库配置, 填写你自己本地 MySQL 的数据库信息。
 
-$db_host = 'localhost';
-$db_name = 'personal_workspace';
-$db_user = 'root';
-$db_pass = '';
+- $db_host = 'localhost';
+- $db_name = 'personal_workspace';
+- $db_user = 'root';
+- $db_pass = '';
 
 ### 5. 启动项目
 确保 Apache 和 MySQL 已启动，然后在浏览器访问：
