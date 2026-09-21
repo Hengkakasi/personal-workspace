@@ -13,9 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 $db_host = 'localhost';
-$db_name = 'YOUR_DATABASE_NAME';
-$db_user = 'YOUR_DATABASE_USERNAME';
-$db_pass = 'YOUR_DATABASE_PASSWORD';
+$db_name = 'personal_workspace';
+$db_user = 'root';
+$db_pass = '';
 
 try {
     $pdo = new PDO(
