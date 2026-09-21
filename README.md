@@ -16,13 +16,13 @@
 ### 2. 下载项目
 
 ### 3. 创建 MySQL 数据库
-a. 打开 phpMyAdmin：访问 http://localhost/phpmyadmin
-b. 创建一个新的 MySQL 数据库 personal_workspace
-c. 然后导入项目中的数据库结构：sql/schema.sql
+- 打开 phpMyAdmin：访问 http://localhost/phpmyadmin
+- 创建一个新的 MySQL 数据库 personal_workspace
+- 然后导入项目中的数据库结构：sql/schema.sql
 
 ### 4. 配置数据库连接
-a. 打开 api.php
-b. 找到数据库配置, 填写你自己本地 MySQL 的数据库信息。
+- 打开 api.php
+- 找到数据库配置, 填写你自己本地 MySQL 的数据库信息。
 
 $db_host = 'localhost';
 $db_name = 'personal_workspace';
