@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow">
+    <title>个人事务管理 - PHP + MySQL版</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Quill 富文本编辑器样式 -->
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 登录页面 -->
+    <div class="login-overlay" id="login-overlay">
+        <div class="login-box">
+            <div class="login-logo">📋</div>
+            <h2>个人工作台</h2>
+            <p class="login-subtitle">请登录以继续访问</p>
+            <div class="login-error" id="login-error">用户名或密码错误</div>
+            <div class="form-group">
+                <label>用户名</label>
+                <input type="text" id="login-username" placeholder="输入用户名" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input type="password" id="login-password" placeholder="输入密码" autocomplete="current-password">
+            </div>
+            <button class="login-btn" id="login-btn">登 录</button>
+        </div>
+    </div>
+
+    <!-- 侧边栏 -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-text"><span>📋</span><span class="logo-label">个人工作台</span></div>
+            <button class="collapse-btn" id="collapse-btn" title="折叠/展开菜单">◀</button>
+        </div>
+        <div id="nav-items-container">
+            <div class="nav-item" data-module="growth" draggable="true">
+                <span class="icon">🌱</span> 个人提升
+                <span class="badge" id="badge-growth">0</span>
+                <span class="drag-handle">⠿</span>
+            </div>
+            <div class="nav-item active" data-module="todos" draggable="true">
+                <span class="icon">✅</span> 待办事项
+                <span class="badge" id="badge-todos">0</span>
+                <span class="drag-handle">⠿</span>
+            </div>
+            <div class="nav-item" data-module="interviews" draggable="true">
+                <span class="icon">💼</span> 面试记录
+                <span class="badge" id="badge-interviews">0</span>
+                <span class="drag-handle">⠿</span>
+            </div>
+            <div class="nav-item" data-module="profiles" draggable="true">
+                <span class="icon">👤</span> 个人资料
+                <span class="badge" id="badge-profiles">0</span>
+                <span class="drag-handle">⠿</span>
+            </div>
+            <div class="nav-item" data-module="places" draggable="true">
+                <span class="icon">📍</span> 好去处
+                <span class="badge" id="badge-places">0</span>
+                <span class="drag-handle">⠿</span>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            v2.0 · 数据存储在MySQL
+            <button class="logout-btn" id="logout-btn">🚪 退出登录</button>
+        </div>
+    </nav>
+
+    <!-- 移动端遮罩层 -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <div class="main-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+                <h1 id="module-title">✅ 待办事项</h1>
+            </div>
+            <div class="header-actions">
+                <div class="search-wrapper" id="search-wrapper">
+                    <button class="header-btn search-toggle-btn" id="search-toggle-btn">
+                        🔍 <span class="search-toggle-text">搜索</span>
+                    </button>
+                    <input type="text" class="search-input" id="global-search" placeholder="🔍 搜索... (Ctrl+K)" autocomplete="off">
+                    <button class="search-clear" id="search-clear" title="清除">✕</button>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+                <button class="header-btn" id="btn-add">➕ 新建</button>
+            </div>
+        </div>
+        <div class="content-area" id="content-area">
+            <div class="empty-state">
+                <div class="empty-icon">⏳</div>
+                <h3>正在加载数据...</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast容器 -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- 模态框容器 -->
+    <div id="modal-root"></div>
+
+    <!-- Quill 富文本编辑器 -->
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    
+    <!-- 主应用 -->
+    <script src="app.js"></script>
+</body>
+</html>
