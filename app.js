@@ -57,7 +57,8 @@ const App = {
         growthNodes: [],
         growthCurrentId: null,
         growthExpanded: {},
-
+        profileFolder: 'all',
+        
         // ===== 其他模块 =====
         todos: [], interviews: [], profiles: [], places: [],
         todoFilter: 'all', interviewFilter: 'all',
@@ -2048,36 +2049,84 @@ const App = {
 
     // ============ 个人资料渲染 ============
     renderProfiles(area) {
-        const list = this.data.profiles;
-        // 注意：原来这里用了 folders 和 currentFolder，现在文件夹已统一到 growthNodes
-        // 这里个人资料暂时按原样展示所有资料，或你可以后续改成用 growthNodes 的文件夹
-        const folderBar = `<div class="folder-bar">
-            <div class="folder-chip active">📁 全部 <span class="folder-count">${list.length}</span></div>
+    const list = this.data.profiles;
+    const currentFolder = this.data.profileFolder || 'all';
+
+    // ⭐ 只保留 个人 / 学习 / 工作
+    const baseFolders = ['个人', '学习', '工作'];
+    const folderSet = new Set(baseFolders);
+    list.forEach(p => {
+        if (p.folder && p.folder.trim()) folderSet.add(p.folder);
+    });
+    const folders = Array.from(folderSet);
+
+    // 过滤
+    let filteredList = list;
+    if (currentFolder !== 'all') {
+        filteredList = list.filter(p => (p.folder || '') === currentFolder);
+    }
+
+    const countOf = (f) => list.filter(p => (p.folder || '') === f).length;
+
+    // 顶部 folder bar
+    const folderBar = `<div class="folder-bar">
+        <div class="folder-chip ${currentFolder === 'all' ? 'active' : ''}"
+             onclick="App.setProfileFolder('all')">
+            📁 全部 <span class="folder-count">${list.length}</span>
+        </div>
+        ${folders.map(f => `
+            <div class="folder-chip ${currentFolder === f ? 'active' : ''}"
+                 onclick="App.setProfileFolder('${this.escapeHtml(f)}')">
+                📂 ${this.escapeHtml(f)} <span class="folder-count">${countOf(f)}</span>
+            </div>
+        `).join('')}
+    </div>`;
+
+    if (filteredList.length === 0) {
+        area.innerHTML = `${folderBar}<div class="empty-state">
+            <div class="empty-icon">👤</div>
+            <h3>${currentFolder === 'all' ? '没有个人资料' : '此文件夹为空'}</h3>
+            <p>存放个人简介、证书、工作资料等！</p>
         </div>`;
-        if (list.length === 0) {
-            area.innerHTML = `${folderBar}<div class="empty-state"><div class="empty-icon">👤</div><h3>没有个人资料</h3><p>存放个人简介、技能列表等！</p></div>`;
-            return;
-        }
-        area.innerHTML = `${folderBar}<div class="profile-grid">${list.map(item => `
-            <div class="card profile-card" id="profile-${item.id}" onclick="App.toggleProfileExpand('${item.id}')">
-                <div class="profile-title">${item.icon || '📄'} ${this.escapeHtml(item.title)}</div>
-                <div style="margin-bottom:8px;"><span class="tag tag-blue">📂 ${this.escapeHtml(item.folder || '未分类')}</span></div>
-                ${item.filePath ? `
-                    <div style="margin-bottom:8px;display:flex;gap:6px;flex-wrap:wrap;">
-                        <a href="${item.filePath}" target="_blank" class="tag tag-green" style="text-decoration:none;" onclick="event.stopPropagation();">📎 查看</a>
-                        <a href="${item.filePath}" download class="tag tag-blue" style="text-decoration:none;" onclick="event.stopPropagation();">⬇️ 下载</a>
-                    </div>
-                ` : ''}
-                <div class="profile-content">${this.escapeHtml(item.content || '（无内容）')}</div>
-                <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-size:11px;color:var(--text-muted);">🕐 ${this.formatDate(item.updatedAt)}</span>
-                    <div style="display:flex;gap:6px;">
-                        <button class="btn btn-sm btn-secondary" onclick="event.stopPropagation();App.openProfileForm('${item.id}')">✏️</button>
-                        <button class="btn btn-sm btn-danger" onclick="event.stopPropagation();App.deleteProfile('${item.id}')">🗑️</button>
-                    </div>
+        return;
+    }
+
+    area.innerHTML = `${folderBar}<div class="profile-grid">${filteredList.map(item => `
+        <div class="card profile-card" id="profile-${item.id}" onclick="App.toggleProfileExpand('${item.id}')">
+            <div class="profile-title">${item.icon || '📄'} ${this.escapeHtml(item.title)}</div>
+            <div style="margin-bottom:8px;">
+                <span class="tag tag-blue">📂 ${this.escapeHtml(item.folder || '未分类')}</span>
+            </div>
+            ${item.filePath ? `
+                <div style="margin-bottom:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                    <a href="${item.filePath}" target="_blank" class="tag tag-green"
+                       style="text-decoration:none;" onclick="event.stopPropagation();">📎 查看</a>
+                    <a href="${item.filePath}" download class="tag tag-blue"
+                       style="text-decoration:none;" onclick="event.stopPropagation();">⬇️ 下载</a>
                 </div>
-            </div>`).join('')}</div>`;
-    },
+            ` : ''}
+            <div class="profile-content">${this.escapeHtml(item.content || '（无内容）')}</div>
+            <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:11px;color:var(--text-muted);">🕐 ${this.formatDate(item.updatedAt)}</span>
+                <div style="display:flex;gap:6px;">
+                    <button class="btn btn-sm btn-secondary"
+                            onclick="event.stopPropagation();App.openProfileForm('${item.id}')">✏️</button>
+                    <button class="btn btn-sm btn-danger"
+                            onclick="event.stopPropagation();App.deleteProfile('${item.id}')">🗑️</button>
+                </div>
+            </div>
+        </div>`).join('')}</div>`;
+},
+
+setProfileFolder(folder) {
+    this.data.profileFolder = folder;
+    this.render();
+},
+
+setProfileFolder(folder) {
+    this.data.profileFolder = folder;
+    this.render();
+},
 
     // ============ 好去处渲染 ============
     renderPlaces(area) {
@@ -2430,26 +2479,36 @@ const App = {
     },
 
     openProfileForm(profileId = null) {
-        const item = profileId ? this.data.profiles.find(p => p.id === profileId) : null;
-        const title = item?.title || '', icon = item?.icon || '📄', content = item?.content || '';
-        const folder = item?.folder || '未分类', filePath = item?.filePath || '';
-        const icons = ['📄', '👤', '💼', '🎓', '🛠️', '📝', '🏆', '💡', '📌', '🔗', '📋', '⭐'];
-        // 不再从 folders 表获取，改用固定选项
-        const folderOptions = ['未分类', '个人简介', '技能', '证书', '作品集']
-            .map(f => `<option value="${f}" ${folder === f ? 'selected' : ''}>${f}</option>`).join('');
-        this.openModal(`<h2>${item ? '编辑资料' : '新建资料'}</h2>
-            <div class="form-row">
-                <div class="form-group" style="flex:2;"><label>资料标题 *</label><input type="text" id="pf-title" value="${this.escapeHtml(title)}" placeholder="例如：个人简介"></div>
-                <div class="form-group" style="flex:1;"><label>图标</label><select id="pf-icon">${icons.map(i => `<option value="${i}" ${icon===i?'selected':''}>${i}</option>`).join('')}</select></div>
-            </div>
-            <div class="form-group"><label>文件夹</label><select id="pf-folder">${folderOptions}</select></div>
-            <div class="form-group"><label>上传文件</label><input type="file" id="pf-file" accept=".pdf,.doc,.docx,.txt,.jpg,.png,.jpeg">${filePath ? `<div style="margin-top:8px;font-size:12px;color:var(--text-muted);">当前文件: <a href="${filePath}" target="_blank">查看</a></div>` : ''}<input type="hidden" id="pf-file-path" value="${filePath}"></div>
-            <div class="form-group"><label>资料内容</label><textarea id="pf-content" rows="6" placeholder="输入备注或说明...">${this.escapeHtml(content)}</textarea></div>
-            <div class="modal-actions">
-                <button class="btn btn-secondary" onclick="App.closeModal()">取消</button>
-                <button class="btn btn-primary" onclick="App.saveProfile('${profileId || ''}')">保存</button>
-            </div>`);
-    },
+    const item = profileId ? this.data.profiles.find(p => p.id === profileId) : null;
+    const title = item?.title || '', icon = item?.icon || '📄', content = item?.content || '';
+    const folder = item?.folder || '个人', filePath = item?.filePath || '';
+    const icons = ['📄', '👤', '💼', '🎓', '🛠️', '📝', '🏆', '💡', '📌', '🔗', '📋', '⭐'];
+
+    // ⭐ 只保留 个人 / 学习 / 工作
+    const baseFolders = ['个人', '学习', '工作'];
+    const folderSet = new Set(baseFolders);
+    this.data.profiles.forEach(p => {
+        if (p.folder && p.folder.trim()) folderSet.add(p.folder);
+    });
+    if (folder) folderSet.add(folder);
+
+    const folderOptions = Array.from(folderSet)
+        .map(f => `<option value="${this.escapeHtml(f)}" ${folder === f ? 'selected' : ''}>${this.escapeHtml(f)}</option>`)
+        .join('');
+
+    this.openModal(`<h2>${item ? '编辑资料' : '新建资料'}</h2>
+        <div class="form-row">
+            <div class="form-group" style="flex:2;"><label>资料标题 *</label><input type="text" id="pf-title" value="${this.escapeHtml(title)}" placeholder="例如：个人简介"></div>
+            <div class="form-group" style="flex:1;"><label>图标</label><select id="pf-icon">${icons.map(i => `<option value="${i}" ${icon===i?'selected':''}>${i}</option>`).join('')}</select></div>
+        </div>
+        <div class="form-group"><label>文件夹</label><select id="pf-folder">${folderOptions}</select></div>
+        <div class="form-group"><label>上传文件</label><input type="file" id="pf-file" accept=".pdf,.doc,.docx,.txt,.jpg,.png,.jpeg">${filePath ? `<div style="margin-top:8px;font-size:12px;color:var(--text-muted);">当前文件: <a href="${filePath}" target="_blank">查看</a></div>` : ''}<input type="hidden" id="pf-file-path" value="${filePath}"></div>
+        <div class="form-group"><label>资料内容</label><textarea id="pf-content" rows="6" placeholder="输入备注或说明...">${this.escapeHtml(content)}</textarea></div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="App.closeModal()">取消</button>
+            <button class="btn btn-primary" onclick="App.saveProfile('${profileId || ''}')">保存</button>
+        </div>`);
+},
 
     async saveProfile(profileId) {
         const title = document.getElementById('pf-title').value.trim();
