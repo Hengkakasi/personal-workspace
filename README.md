@@ -18,7 +18,7 @@
 ### 3. 创建 MySQL 数据库
 - 打开 phpMyAdmin：访问 http://localhost/phpmyadmin
 - 创建一个新的 MySQL 数据库 personal_workspace
-- 然后导入项目中的数据库结构：sql/schema.sql
+- 然后导入项目中的数据库结构：schema.sql
 
 ### 4. 配置数据库连接
 - 打开 api.php
