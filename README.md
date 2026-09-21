@@ -21,17 +21,9 @@
 - 打开 phpMyAdmin：访问 http://localhost/phpmyadmin
 - 创建一个新的 MySQL 数据库 **personal_workspace**
 - 然后导入项目中的数据库结构：**schema.sql**
+- 默认登录：Username: **admin**，Password: **admin123**
 
-### 4. 配置数据库连接
-- 打开 api.php
-- 找到数据库配置, 填写你自己本地 MySQL 的数据库信息。
-
-- $db_host = 'localhost';
-- $db_name = 'personal_workspace';
-- $db_user = 'root';
-- $db_pass = '';
-
-### 5. 启动项目
+### 4. 启动项目
 确保 Apache 和 MySQL 已启动，然后在浏览器访问：
 
 http://localhost/personal-workspace/
