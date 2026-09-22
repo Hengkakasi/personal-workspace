@@ -38,6 +38,7 @@
 - 悬停操作：新建子项 / 重命名 / 删除
 - 拖拽排序（`sort_order` 字段驱动）
 - 侧边栏搜索：跨所有模块统一检索
+<img width="1862" height="868" alt="image" src="https://github.com/user-attachments/assets/8c720c74-299c-4390-8d9c-750f104e3195" />
 
 ### ✅ 待办事项 · Todo with 3 Views
 > 你的日常任务、项目跟进、习惯打卡。
@@ -52,6 +53,9 @@
 - **提醒**：`datetime` 精确到分钟，到点浏览器通知 + 手机震动
 - **Google Calendar**：一键生成日历事件链接，包含标题 / 时间 / 备注
 - **快速添加**：点击日程空格，自动填好对应时间
+<img width="1910" height="870" alt="image" src="https://github.com/user-attachments/assets/4c726333-344c-4bf3-a516-ae59bcb27c3e" />
+<img width="1891" height="863" alt="image" src="https://github.com/user-attachments/assets/f62e5c68-5f6f-4c87-88ac-e725767e24e0" />
+<img width="1897" height="865" alt="image" src="https://github.com/user-attachments/assets/c34ab086-23cc-4e53-aac6-7dadbf05cec9" />
 
 ### 💼 面试记录 · Job Tracker
 > 追踪每一次投递、面试、结果。
