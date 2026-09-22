@@ -73,6 +73,8 @@
   - 🙋 Question to Ask —— 你想问的
 - **独立 Script 视图**：大字号排版，一页看完
 - **日历联动**：面试日期自动显示在月历上（紫色标记）
+<img width="1917" height="867" alt="image" src="https://github.com/user-attachments/assets/fd8b3956-f464-4c3e-9dcc-fce45103465e" />
+<img width="1917" height="856" alt="image" src="https://github.com/user-attachments/assets/ca8fc892-a7e4-4b10-82a5-02caa3336d22" />
 
 ### 👤 个人资料 · Document Vault
 > 存你的简历、证书、成绩单、Offer。
@@ -82,6 +84,8 @@
 - 卡片展开 / 收起：内容多时自动截断，点击展开
 - 一键查看 / 下载附件
 - 图标自定义（12 种 emoji 可选）
+<img width="1897" height="471" alt="image" src="https://github.com/user-attachments/assets/ecf2d69f-6158-4131-8531-d861c60934b6" />
+<img width="1917" height="862" alt="image" src="https://github.com/user-attachments/assets/db864660-048e-44fa-ae96-82deb965be0c" />
 
 ### 📍 好去处 · Places Collection
 > 收藏你去过或想去的餐厅、咖啡馆、景点。
